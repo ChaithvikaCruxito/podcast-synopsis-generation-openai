@@ -5,7 +5,7 @@
       "name": "myblob",
       "type": "blobTrigger",
       "direction": "in",
-      "path": "transcription/{name}",
+      "path": "transcriptionlkc/{name}",
       "connection": "STORAGE_ACCOUNT_CONNECTION_STRING"
     }
   ]

@@ -1,51 +1,59 @@
 
-import openai
+# import openai
+from openai import AzureOpenAI
 from .appsettings import OPENAI_KEY, OPENAI_ENDPOINT
 import logging
 import tiktoken
 
 
-openai.api_type = "azure"
-openai.api_base = OPENAI_ENDPOINT
-openai.api_version = "2022-12-01"
-openai.api_key = OPENAI_KEY
+# openai.api_type = "azure"
+# openai.azure_endpoint = OPENAI_ENDPOINT
+# openai.api_version = "2023-07-01-preview"
+# openai.api_key = OPENAI_KEY
 
+client = AzureOpenAI(
+    api_key=OPENAI_KEY,  
+    api_version="2023-07-01-preview",
+    azure_endpoint = OPENAI_ENDPOINT
+)
+    
+deployment_name='podcastlkcgpt35turbo'
 
 # id of desired_model
-DESIRED_MODEL = 'text-davinci-003'
-DESIRED_CAPABILITY = 'completion'
+# DESIRED_MODEL = 'text-davinci-003'
+# DESIRED_CAPABILITY = 'completion'
 
-deployment_id = None
+# deployment_id = None
 
-def deploy_model():
-    global deployment_id
-    # list models deployed with
-    result = openai.Deployment.list()
+# def deploy_model():
+#     global deployment_id
+#     # list models deployed with
+#     result = openai.Deployment.list()
 
-    for deployment in result.data:
-        if deployment["status"] != "succeeded":
-            continue
+#     for deployment in result.data:
+#         if deployment["status"] != "succeeded":
+#             continue
 
-        model = openai.Model.retrieve(deployment["model"])
+#         model = openai.Model.retrieve(deployment["model"])
 
-        # check if desired_model is deployed, and if it has 'completion' capability
-        if model["id"] == DESIRED_MODEL and model['capabilities'][DESIRED_CAPABILITY]:
-            deployment_id = deployment["id"]
+#         # check if desired_model is deployed, and if it has 'completion' capability
+#         if model["id"] == DESIRED_MODEL and model['capabilities'][DESIRED_CAPABILITY]:
+#             deployment_id = deployment["id"]
 
-    # if no model deployed, deploy one
-    if not deployment_id:
-        logging.info('No deployment with status: succeeded found.')
+#     # if no model deployed, deploy one
+#     if not deployment_id:
+#         logging.info('No deployment with status: succeeded found.')
 
-        # Deploy the model
-        logging.info(f'Creating a new deployment with model: {DESIRED_MODEL}')
-        result = openai.Deployment.create(model=DESIRED_MODEL, scale_settings={
-            "scale_type": "standard"})
-        deployment_id = result["id"]
-        logging.info(
-            f'Successfully created {DESIRED_MODEL} that supports text {DESIRED_CAPABILITY} with id: {deployment_id}.')
-    else:
-        logging.info(
-            f'Found a succeeded deployment of "{DESIRED_MODEL}" that supports text {DESIRED_CAPABILITY} with id: {deployment_id}.')
+#         # Deploy the model
+#         logging.info(f'Creating a new deployment with model: {DESIRED_MODEL}')
+#         result = openai.Deployment.create(model=DESIRED_MODEL, scale_settings={
+#             "scale_type": "standard"})
+#         deployment_id = result["id"]
+#         logging.info(
+#             f'Successfully created {DESIRED_MODEL} that supports text {DESIRED_CAPABILITY} with id: {deployment_id}.')
+#     else:
+#         logging.info(
+#             f'Found a succeeded deployment of "{DESIRED_MODEL}" that supports text {DESIRED_CAPABILITY} with id: {deployment_id}.')
 
 
 def strip_string(string, to_strip):
@@ -85,21 +93,36 @@ def chunk_generator(text, n, tokenizer):
 
 
 def request_api(document, prompt_postfix, max_tokens):
-    global deployment_id
     prompt = prompt_postfix.replace('<document>', document)
-    # logging.info(f'>>> prompt : {prompt}')
+    messages = [{"role": "user", "content": prompt}]
+    logging.info(f'>>> prompt : {prompt}')
+    response = client.chat.completions.create(
+        model=deployment_name, # model = "deployment_name".
+        messages=messages,
+        max_tokens=max_tokens
+    )
+    print("*********************")
+    print(response)
+    print("********************")
+    # print(response.model_dump_json(indent=2))
+    # print(response.choices[0].message.content)
+    # response =  client.chat.completions.create(model=deployment_name, prompt=prompt, max_tokens=10)
+    # response = AzureOpenAI.chat.completion.create(
+    #     model="podcastlkcgpt35turbo",
+    #     messages=prompt,
+    #     temperature=0,
+    #     max_tokens=max_tokens,
+    #     top_p=1,
+    #     frequency_penalty=1,
+    #     presence_penalty=1,
+    #     stop='###'
+    # )
 
-    response = openai.Completion.create(
-        deployment_id=deployment_id,
-        prompt=prompt,
-        temperature=0,
-        max_tokens=max_tokens,
-        top_p=1,
-        frequency_penalty=1,
-        presence_penalty=1,
-        stop='###')
-
-    return response['choices'][0]['text']
+    # return response['choices'][0]['text']
+    print("***********************")
+    print(response.choices[0].message.content)
+    print("************************")
+    return response.choices[0].message.content
 
 
 def generate_synopsis(content):
@@ -216,4 +239,4 @@ def generate_portuguese(synopsis):
     return remove_special_tokens(translations)
 
 
-deploy_model()
+# deploy_model()

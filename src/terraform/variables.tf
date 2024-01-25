@@ -5,7 +5,7 @@ variable "env" {
 
 variable "resource_group_name" {
   type    = string
-  default = "podabstract-demo-rg"
+  default = "podabstract-lkc"
 }
 
 variable "region" {
@@ -15,11 +15,11 @@ variable "region" {
 
 variable "storage_account_name" {
   type    = string
-  default = "podabstractdemo"
+  default = "podabstractlkc"
 }
 
 variable "function_app_name" {
   type    = string
-  default = "podabstract"
+  default = "podabstractlkc"
 }
 

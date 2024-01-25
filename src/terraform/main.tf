@@ -46,7 +46,7 @@ resource "azurerm_resource_group" "podabstract" {
 # == Storage account ====================================================
 
 resource "azurerm_storage_account" "podabstract" {
-  name                     = "${var.storage_account_name}${random_string.unique_prefix.result}sa"
+  name                     = "${var.storage_account_name}${random_string.unique_prefix.result}salkc"
   resource_group_name      = azurerm_resource_group.podabstract.name
   location                 = azurerm_resource_group.podabstract.location
   account_tier             = "Standard"
@@ -72,25 +72,25 @@ resource "azurerm_storage_account" "podabstract" {
 }
 
 resource "azurerm_storage_container" "podabstract_raw_files" {
-  name                  = "raw-files"
+  name                  = "raw-fileslkc"
   storage_account_name  = azurerm_storage_account.podabstract.name
   container_access_type = "private"
 }
 
 resource "azurerm_storage_container" "podabstract_transcription" {
-  name                  = "transcription"
+  name                  = "transcriptionlkc"
   storage_account_name  = azurerm_storage_account.podabstract.name
   container_access_type = "private"
 }
 
 resource "azurerm_storage_container" "podabstract_openai" {
-  name                  = "open-ai-results"
+  name                  = "open-ai-resultslkc"
   storage_account_name  = azurerm_storage_account.podabstract.name
   container_access_type = "private"
 }
 
 resource "azurerm_storage_share" "podabstract" {
-  name                 = "functions-fs"
+  name                 = "functions-fslkc"
   storage_account_name = azurerm_storage_account.podabstract.name
   quota                = 10
 }
@@ -205,7 +205,7 @@ resource "azurerm_cognitive_account" "podabstract_speech" {
 
 resource "azurerm_cognitive_account" "podabstract_oai" {
   name                = "podabstract-${random_string.unique_prefix.result}-openai"
-  location            = "South Central US"
+  location            = "West US"
   resource_group_name = azurerm_resource_group.podabstract.name
   kind                = "OpenAI"
   sku_name            = "S0"
