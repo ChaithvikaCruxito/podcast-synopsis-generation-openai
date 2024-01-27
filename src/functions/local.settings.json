@@ -2,14 +2,14 @@
   "IsEncrypted": false,
   "Values": {
     "FUNCTIONS_WORKER_RUNTIME": "python",
-    "AzureWebJobsStorage": "DefaultEndpointsProtocol=https;AccountName=podabstractlkc1ux78salkc;AccountKey=1W6vX9dnsi+/BeRv7FQUUPUXVlwuhE1v1v2KUFEb0i+zwStjCF4X2jNC9lT934oD9h9pwtk+B40X+AStPsEjqQ==;EndpointSuffix=core.windows.net",
-    "STORAGE_ACCOUNT_CONNECTION_STRING": "DefaultEndpointsProtocol=https;AccountName=podabstractlkc1ux78salkc;AccountKey=1W6vX9dnsi+/BeRv7FQUUPUXVlwuhE1v1v2KUFEb0i+zwStjCF4X2jNC9lT934oD9h9pwtk+B40X+AStPsEjqQ==;EndpointSuffix=core.windows.net",
+    "AzureWebJobsStorage": "DefaultEndpointsProtocol=https;AccountName=podabstractlkcp16ausalkc;AccountKey=A9OztD/6dIezHuomPMzXwQ2xPy5U4PagvwZrhrBViHkxOx7IhVOVldDUINGNYQ0ByKFmOuRtfUxI+AStRnxpcA==;EndpointSuffix=core.windows.net",
+    "STORAGE_ACCOUNT_CONNECTION_STRING": "DefaultEndpointsProtocol=https;AccountName=podabstractlkcp16ausalkc;AccountKey=A9OztD/6dIezHuomPMzXwQ2xPy5U4PagvwZrhrBViHkxOx7IhVOVldDUINGNYQ0ByKFmOuRtfUxI+AStRnxpcA==;EndpointSuffix=core.windows.net",
     "AUDIO_FILE_UPLOAD_CONTAINER": "raw-fileslkc",
     "TRANSCRIPTION_FILE_UPLOAD_CONTAINER": "transcriptionlkc",
     "OPENAI_INSIGHTS_FILE_UPLOAD_CONTAINER": "open-ai-resultslkc",
-    "SPEECH_KEY": "77674d9dc616425b94fcea281589e718",
+    "SPEECH_KEY": "0260fbe544454cfbb1e8bf3519655308",
     "SPEECH_REGION": "westus",
-    "OPENAI_KEY": "a693f060617244cb81adb63ce2752769",
+    "OPENAI_KEY": "e33f4c83eecb457993cd0c23fef5745b",
     "OPENAI_ENDPOINT": "https://westus.api.cognitive.microsoft.com/",
     "FILE_SHARE_MOUNT_PATH": "../terraform/data/functions-file-share"
   }
